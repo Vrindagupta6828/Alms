@@ -28,7 +28,7 @@ export const Signin = (props) => {
       localStorage.setItem("_id", res.data.user._id);
       localStorage.setItem("name", res.data.user.Name);
       localStorage.setItem("email", res.data.user.email);
-      props.history.push("/donate");
+      props.history.push("/");
     } else {
       seterror(true);
     }

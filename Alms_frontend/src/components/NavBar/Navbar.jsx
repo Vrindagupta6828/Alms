@@ -40,7 +40,11 @@ const Navbar = (props) => {
             </button>
           </li>
           {localStorage.name ? (
-            <li>{localStorage.name.toUpperCase()}</li>
+            <li style={{cursor:"pointer"}} onClick={(e) => {
+              e.preventDefault();
+              localStorage.clear();
+              window.location="/";
+            }}>{localStorage.name.toUpperCase()}</li>
           ) : (
             <li>
               <Link to="/signup"> SIGNUP </Link>

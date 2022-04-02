@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 exports.userSignup = (req, res) => {
+  console.log(req.body, "hello");
   User.findOne({ email: req.body.email }, async function (err, user) {
     if (err || user) {
       return res.status(400).json({
@@ -29,7 +30,7 @@ exports.userSignup = (req, res) => {
         if (user) {
           const token = jwt.sign(
             { _id: user._id, email: user.email },
-            process.env.JWT_SECRET,
+            "process.env.JWT_SECRET",
             {
               expiresIn: "1d",
             }
@@ -54,7 +55,7 @@ exports.userSignin = (req, res) => {
         if (user.authenticate(req.body.password)) {
           const token = jwt.sign(
             { _id: user._id, email: user.email },
-            process.env.JWT_SECRET,
+            "process.env.JWT_SECRET",
             { expiresIn: "1d" }
           );
           res.status(200).json({

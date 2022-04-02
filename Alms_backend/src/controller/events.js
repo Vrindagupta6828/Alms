@@ -12,16 +12,17 @@ exports.createEvent = async (req, res) => {
   for (const file of files) {
     const { path } = file;
     const newPath = await uploader(path);
+    console.warn(newPath);
     urls.push(newPath);
     fs.unlinkSync(path);
   }
-  console.log(urls);
+  console.log(urls,req);
 
   const event = new Event({
     Name,
     description,
     driveSpot: { address, city, district, postalCode },
-    DonatedBy: req.user._id,
+    DonatedBy: req._id,
     foodPoster: urls,
   });
 
@@ -44,6 +45,7 @@ exports.getEvents = (req, res) => {
   Event.find({})
     .populate("DonatedBy", "Name phoneNo email")
     .exec((err, events) => {
+      console.log(events);
       if (err) {
         return res.status(400).json({
           message: "Something Went Wrong",

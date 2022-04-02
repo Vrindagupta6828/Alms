@@ -15,5 +15,13 @@
     "Cloudinary"
   ],
   "author": "Alms",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vrindagupta6828/Alms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vrindagupta6828/Alms/issues"
+  },
+  "homepage": "https://github.com/Vrindagupta6828/Alms#readme"
 }

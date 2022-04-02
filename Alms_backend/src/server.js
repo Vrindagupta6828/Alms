@@ -20,7 +20,10 @@ const io = socketio(Server, {
 //middlewares
 app.use(cors());
 app.use(express.json({ extended: false }));
-
+/*app.use("/", (req,res)=>{
+  console.log(req);
+  res.send("i");
+});*/
 app.use("/api", userRoutes);
 app.use("/api", eventRoutes);
 
@@ -28,7 +31,7 @@ app.use("/api", eventRoutes);
 env.config();
 
 mongoose
-  .connect(`${process.env.MONGO_URI}`, {
+  .connect(`mongodb+srv://Vrinda12:vrinda123@cluster0.il1wz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -40,4 +43,4 @@ const rooms = {};
 
 
 
-Server.listen(process.env.PORT || 2000, console.log("Server started"));
+Server.listen(2000, console.log("Server started"));

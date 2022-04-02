@@ -17,12 +17,15 @@ export default function Donacont() {
   useEffect( () => {
     const getDonations = async () => {
       const res = await axios.get('http://localhost:2000/api/event/getevent');
-      return res;
+      console.log(res,res.data);
+      setdonations(res.data.events);
+      return res.data;
     }
-    const resDonations = getDonations();
-    if(resDonations) {
-      setdonations(resDonations.events);
-    }
+    
+    getDonations();
+    /*if(result) {
+      setdonations(result.events);
+    }*/
   }, [])
   return (
     <div className="bg">
@@ -38,11 +41,14 @@ export default function Donacont() {
             justifyContent: "center",
           }}
         >
-          {donations && donations.map(donation => (
+          {donations && donations.map(donation => {
+            const date=new Date(donation.createdAt);
+            const month=['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+            return (
             <div className="bg" key={donation._id}>
             <Container className="dcard">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_guo-kFa8Q6cyyqBC1oPZt5dHuwj25fy85RXiKK2iXhgT9WKe1huwtjetw1dIy1aDV7U&usqp=CAU"
+                src={donation.foodPoster[0].url}
                 height="150px"
                 alt="product"
                 style={{
@@ -52,27 +58,28 @@ export default function Donacont() {
                 }}
               ></img>
               <div className="p-3">
-                <h3>Grains</h3>
+                <h3>{donation.name}</h3>
                 <br />
                 <p style={{ color: "#3d3d3d" }}>
-                  If any organization who serves the food to needy can accept this.
+                  {donation.description}
                 </p>
                 <div>
-                  <BiCalendar /> <span>Date</span>: 30 oct 2021
+                  <BiCalendar /> <span>Date</span>: {date.getDate()} / {month[date.getMonth()]} / {date.getFullYear()}
                   <br />
-                  <GoLocation /> <span>Location</span>: Nerul
+                  <GoLocation /> <span>Location</span>: {donation.driveSpot.city}
                   <br />
                   <GoPerson />
-                  <span> Post by</span>: Narayan Jadhav
+                  <span> Post by</span>: {donation.DonatedBy.Name}
                   <br />
                 </div>
               </div>
               <div class="overlay">
-                <Button variant="warning">Chat with Donor</Button>
+                <Button onClick={()=>{window.location="/chatbox"}} variant="warning">Chat with Donor</Button>
               </div>
             </Container>
           </div>
-          ))}
+          )
+              })}
         </div>
       </Container>
     </div>
